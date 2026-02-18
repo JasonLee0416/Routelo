@@ -1,3 +1,10 @@
+🛵 Routelo: Smooth Routes, Zero Stress
+"So, here’s the story behind the name! Routelo is a clever mix of 'Route' and 'Low' (as in low effort). It’s built on a simple but powerful promise: finding your path should never be the hard part of your job.
+
+I created this app for the everyday heroes we see working all around our neighborhoods—the folks on the front lines who keep our daily lives moving. They’re out there putting in the hard work every single day, so I wanted to give them something back: a tool that lets them breeze through their day with the most efficient routes possible.
+
+Routelo does all the heavy lifting and map-crunching so they can focus on what they do best, with zero stress and total ease. Think of it as a smart co-pilot that’s always got your back, making sure you get where you need to go without the extra effort! 🙌"
+
 ## 🚀 Project Overview: Routelo (√lo)
 
 **Routelo** is a high-performance, cross-platform logistics solution designed to solve the "last-mile" delivery challenge through intelligent route optimization and real-time data processing. Built with **React Native** and **Expo**, the application seamlessly integrates advanced mapping services with a user-centric interface to streamline complex delivery workflows.
