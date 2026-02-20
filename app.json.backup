@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "routelo",
+    "slug": "routelo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "routelo",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jasonlee0312.routelo",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "배달 동선 최적화를 위해 현재 위치를 사용하여 목적지까지의 거리를 계산합니다."
+      }
+    },
+    "android": {
+      "package": "com.jasonlee0312.routelo",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBWbgGyG_v49DR6RPcZy645b7iBXxpj7NY"
+        }
+      },
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      },
+      "permissions": [
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0",
+            "kotlinVersion": "1.9.24",
+            "gradleDaemonJVMArgs": [
+              "-Xmx4g",
+              "-XX:MaxMetaspaceSize=1g"
+            ]
+          }
+        }
+      ]
+    ],
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "50e378b0-29f2-4349-a00c-2fb23957b633"
+      }
+    },
+    "owner": "jasonlee0312",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/50e378b0-29f2-4349-a00c-2fb23957b633"
+    }
+  }
+}
