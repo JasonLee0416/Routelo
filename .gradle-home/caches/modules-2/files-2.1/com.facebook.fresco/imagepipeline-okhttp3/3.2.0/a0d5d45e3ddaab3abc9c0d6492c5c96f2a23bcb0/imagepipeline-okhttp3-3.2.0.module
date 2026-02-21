@@ -1,0 +1,179 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "imagepipeline-okhttp3",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "3.12.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "imagepipeline-okhttp3-3.2.0.aar",
+          "url": "imagepipeline-okhttp3-3.2.0.aar",
+          "size": 11418,
+          "sha512": "d8112f3431a235d5dd49cbcc303c3917ef8b6c490f8ca46c23e656eafcd61f6a988f865f7ecf24d9f9e58c02791595529a5f0e52a324ef955f34e6861a5a6295",
+          "sha256": "b0b30cbc27e26fcf3cfb76d1f153aa0dc5addc5c5ba9a10d77f68c328713c0e8",
+          "sha1": "a40cb11494ebac94a9830f853afdf43de521dd0e",
+          "md5": "3dd34803a8665f4fcc86e5dd0d0e940c"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-native",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "memory-type-ashmem",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "memory-type-native",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "memory-type-java",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "middleware",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "3.12.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "imagepipeline-okhttp3-3.2.0.aar",
+          "url": "imagepipeline-okhttp3-3.2.0.aar",
+          "size": 11418,
+          "sha512": "d8112f3431a235d5dd49cbcc303c3917ef8b6c490f8ca46c23e656eafcd61f6a988f865f7ecf24d9f9e58c02791595529a5f0e52a324ef955f34e6861a5a6295",
+          "sha256": "b0b30cbc27e26fcf3cfb76d1f153aa0dc5addc5c5ba9a10d77f68c328713c0e8",
+          "sha1": "a40cb11494ebac94a9830f853afdf43de521dd0e",
+          "md5": "3dd34803a8665f4fcc86e5dd0d0e940c"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-okhttp3-3.2.0-sources.jar",
+          "url": "imagepipeline-okhttp3-3.2.0-sources.jar",
+          "size": 4190,
+          "sha512": "c3a1a5ce4daa52a441d5cb92f422b80e9a42ae96ea0beb9b46c9b4317536f46781bb57a75ac1abcf878ea8b4e2c99997471068a966ddfae1672fc1b569485507",
+          "sha256": "b805ecebb3ad169ed2970b5a37f78cf15cd0a7066051c5b1e8e92aa910a0db31",
+          "sha1": "083abbce536baa7a5e66377b262b0390472a303c",
+          "md5": "4077328ae4034bc7e95ac96ada2600e8"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-okhttp3-3.2.0-javadoc.jar",
+          "url": "imagepipeline-okhttp3-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

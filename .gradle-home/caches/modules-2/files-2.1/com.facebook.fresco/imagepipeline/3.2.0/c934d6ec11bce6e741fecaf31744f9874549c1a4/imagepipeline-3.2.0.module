@@ -1,0 +1,158 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "imagepipeline",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-base",
+          "version": {
+            "requires": "3.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "imagepipeline-3.2.0.aar",
+          "url": "imagepipeline-3.2.0.aar",
+          "size": 560372,
+          "sha512": "d81c463ff430de95575b5205c3da8fc1beabfbcbe11eef768bbe8f5c332207ae3313568d9075ef51aa7f685830d21e8be1f11decefcc8628d68257b30cb4f979",
+          "sha256": "069c773d3ed56e47b67ee4c6d3875b7cb197dc6c5153b30d2988fe01a6ebf6f3",
+          "sha1": "eaafab045909e94ee1a676f7a47f4c084f75146b",
+          "md5": "69c57f356320bd7fce90aa4690276133"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.soloader",
+          "module": "nativeloader",
+          "version": {
+            "requires": "0.10.5"
+          }
+        },
+        {
+          "group": "com.facebook.soloader",
+          "module": "annotation",
+          "version": {
+            "requires": "0.10.5"
+          }
+        },
+        {
+          "group": "com.parse.bolts",
+          "module": "bolts-tasks",
+          "version": {
+            "requires": "1.4.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "middleware",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.8.21"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-base",
+          "version": {
+            "requires": "3.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "imagepipeline-3.2.0.aar",
+          "url": "imagepipeline-3.2.0.aar",
+          "size": 560372,
+          "sha512": "d81c463ff430de95575b5205c3da8fc1beabfbcbe11eef768bbe8f5c332207ae3313568d9075ef51aa7f685830d21e8be1f11decefcc8628d68257b30cb4f979",
+          "sha256": "069c773d3ed56e47b67ee4c6d3875b7cb197dc6c5153b30d2988fe01a6ebf6f3",
+          "sha1": "eaafab045909e94ee1a676f7a47f4c084f75146b",
+          "md5": "69c57f356320bd7fce90aa4690276133"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-3.2.0-sources.jar",
+          "url": "imagepipeline-3.2.0-sources.jar",
+          "size": 263819,
+          "sha512": "b30cfcc8a4e417c784fa87033e0cf5afb720b5bc1a8862825ccbf5f1675c0bb13b0b1bbc6fb113d268c77999e4c759897e262a0af72662c82f02ade7bd4aca91",
+          "sha256": "dc897b76dffa93e7d6be146633084e2ec388f7325d959cc50c97261d9ab73906",
+          "sha1": "d725fa8a0d6a158ec61e69f7ef44a78b47daa843",
+          "md5": "d3a42c6b2979a08d12fb0af7efb9709f"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-3.2.0-javadoc.jar",
+          "url": "imagepipeline-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

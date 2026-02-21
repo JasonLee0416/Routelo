@@ -1,0 +1,44 @@
+com.facebook.drawee
+attr actualImageResource
+attr actualImageScaleType
+attr actualImageUri
+attr backgroundImage
+attr fadeDuration
+attr failureImage
+attr failureImageScaleType
+attr overlayImage
+attr placeholderImage
+attr placeholderImageScaleType
+attr pressedStateOverlayImage
+attr progressBarAutoRotateInterval
+attr progressBarImage
+attr progressBarImageScaleType
+attr retryImage
+attr retryImageScaleType
+attr roundAsCircle
+attr roundBottomEnd
+attr roundBottomLeft
+attr roundBottomRight
+attr roundBottomStart
+attr roundTopEnd
+attr roundTopLeft
+attr roundTopRight
+attr roundTopStart
+attr roundWithOverlayColor
+attr roundedCornerRadius
+attr roundingBorderColor
+attr roundingBorderPadding
+attr roundingBorderWidth
+attr viewAspectRatio
+id center
+id centerCrop
+id centerInside
+id fitBottomStart
+id fitCenter
+id fitEnd
+id fitStart
+id fitXY
+id focusCrop
+id none
+styleable GenericDraweeHierarchy actualImageScaleType backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio
+styleable SimpleDraweeView actualImageResource actualImageUri backgroundImage fadeDuration failureImage failureImageScaleType overlayImage placeholderImage placeholderImageScaleType pressedStateOverlayImage progressBarAutoRotateInterval progressBarImage progressBarImageScaleType retryImage retryImageScaleType roundAsCircle roundBottomEnd roundBottomLeft roundBottomRight roundBottomStart roundTopEnd roundTopLeft roundTopRight roundTopStart roundWithOverlayColor roundedCornerRadius roundingBorderColor roundingBorderPadding roundingBorderWidth viewAspectRatio

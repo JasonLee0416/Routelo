@@ -1,0 +1,137 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "vito-options",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "vito-options-3.2.0.aar",
+          "url": "vito-options-3.2.0.aar",
+          "size": 34437,
+          "sha512": "9334086d7768e395cc584c006f0954fb563c93ce65285ae0c9486f424962798c767e515fcedb236381043bb5a6565e94d74377552ec482a662ce59f6e64e6ecb",
+          "sha256": "02dce6e1fbe48c233ae29046ce53a02499388abcd1fdbeb8671673b23403ab6c",
+          "sha1": "beb3c3f86616ba25b49d24b3866cfa397e9b26e1",
+          "md5": "19eaedc9b591246b0724b4e6e1fb9a66"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "drawee",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "vito-options-3.2.0.aar",
+          "url": "vito-options-3.2.0.aar",
+          "size": 34437,
+          "sha512": "9334086d7768e395cc584c006f0954fb563c93ce65285ae0c9486f424962798c767e515fcedb236381043bb5a6565e94d74377552ec482a662ce59f6e64e6ecb",
+          "sha256": "02dce6e1fbe48c233ae29046ce53a02499388abcd1fdbeb8671673b23403ab6c",
+          "sha1": "beb3c3f86616ba25b49d24b3866cfa397e9b26e1",
+          "md5": "19eaedc9b591246b0724b4e6e1fb9a66"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "vito-options-3.2.0-sources.jar",
+          "url": "vito-options-3.2.0-sources.jar",
+          "size": 9531,
+          "sha512": "ff53e97c936afae23d0c2dc10f094a590691ad96569d7eda40b3245bb3615bd1a26cf69ae861b7cf01aa3c2ff58c167da6764a20b7bb79920dc83809ecf2bc2b",
+          "sha256": "6c21fdcf7224f50997ec937406763238d273b79e7fbdb98420005fcdd848296e",
+          "sha1": "295feb09c0e5cad01f6af47aba79a680e999a151",
+          "md5": "47dc7757d94ef5b4cd9fdda2feaf08a4"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "vito-options-3.2.0-javadoc.jar",
+          "url": "vito-options-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

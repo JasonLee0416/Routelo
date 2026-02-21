@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.squareup.okhttp3",
+    "module": "okhttp-brotli",
+    "version": "4.9.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "6.5",
+      "buildId": "xikptbdckbh4lbb7wexwg7ggny"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.9.2"
+          }
+        },
+        {
+          "group": "org.brotli",
+          "module": "dec",
+          "version": {
+            "requires": "0.1.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.4.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "okhttp-brotli-4.9.2.jar",
+          "url": "okhttp-brotli-4.9.2.jar",
+          "size": 2660,
+          "sha512": "9ae064f67e29d48e97d02a13d318d8f7d734bd9c51a01c5b7efdf7121a50d4dd1dac978403cc042ad152454517d7f0d0e6b092901bb11c4798ae2ec11b24f8a6",
+          "sha256": "79b6bc4364aa14a58271a795d1fcb39c246d03dd8da59ef0b5e7ceede7140437",
+          "sha1": "6cfe9555a20f39ca88be72b5c70147f20520e761",
+          "md5": "1ba61a60a7f0c0ca25d4bd0ac37eaa71"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.9.2"
+          }
+        },
+        {
+          "group": "org.brotli",
+          "module": "dec",
+          "version": {
+            "requires": "0.1.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.4.10"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "okhttp-brotli-4.9.2.jar",
+          "url": "okhttp-brotli-4.9.2.jar",
+          "size": 2660,
+          "sha512": "9ae064f67e29d48e97d02a13d318d8f7d734bd9c51a01c5b7efdf7121a50d4dd1dac978403cc042ad152454517d7f0d0e6b092901bb11c4798ae2ec11b24f8a6",
+          "sha256": "79b6bc4364aa14a58271a795d1fcb39c246d03dd8da59ef0b5e7ceede7140437",
+          "sha1": "6cfe9555a20f39ca88be72b5c70147f20520e761",
+          "md5": "1ba61a60a7f0c0ca25d4bd0ac37eaa71"
+        }
+      ]
+    },
+    {
+      "name": "javadocElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "okhttp-brotli-4.9.2-javadoc.jar",
+          "url": "okhttp-brotli-4.9.2-javadoc.jar",
+          "size": 261,
+          "sha512": "a958b8b4678978a4a5aa6a4f0c1dfbf6d4f70b9c81ad8e6cf6381014a9f5d57f2778d70e84934fd037eb4a2febaea50885910991e4bd089855d5e4c30cc8ecc1",
+          "sha256": "0095dfaafed1603b923c6a3eb9c3dca8a54a30a436de6e032c3dd65427c981fd",
+          "sha1": "000cb6ed7f236c21c0c3174d70ea427777e61225",
+          "md5": "c5bec8aee2e6f7091d74d657866dd017"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "okhttp-brotli-4.9.2-sources.jar",
+          "url": "okhttp-brotli-4.9.2-sources.jar",
+          "size": 1550,
+          "sha512": "5d44e31a7accc72904a585c47ffab1ecd8e65ac58fa232da68ec86f947ff9287d53f31def581b5de61fec684c1e11899c68b8cedc588e5456843b224d25fa56f",
+          "sha256": "c0bfceb153ac0083c6f7820f41a725076f5ef29599e614edcb0f53d770f52af5",
+          "sha1": "80c829036cdf3837eb6a0e4ac14362ed59ab6d2f",
+          "md5": "92b68fb0cc15e98da02e66b0f6c2c786"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "middleware",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "middleware-3.2.0.aar",
+          "url": "middleware-3.2.0.aar",
+          "size": 6423,
+          "sha512": "2184d6470f8e37fdd110ff90751b6e442da2d6291a0b05e489581a1cc711e5f64920e97ce8876ee52da021888e9cc0cdf51929625f631ef2187b2868a566abb3",
+          "sha256": "e5ae6a577e027ad48067828ddea557ac4da3019e5f72c4dc7d16cf06cedf5103",
+          "sha1": "b8b1e6692ab84706ce1cac947fedcb0fe9a2b4ee",
+          "md5": "346576be0a4d2335bbf59e2d61197897"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "ui-common",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "middleware-3.2.0.aar",
+          "url": "middleware-3.2.0.aar",
+          "size": 6423,
+          "sha512": "2184d6470f8e37fdd110ff90751b6e442da2d6291a0b05e489581a1cc711e5f64920e97ce8876ee52da021888e9cc0cdf51929625f631ef2187b2868a566abb3",
+          "sha256": "e5ae6a577e027ad48067828ddea557ac4da3019e5f72c4dc7d16cf06cedf5103",
+          "sha1": "b8b1e6692ab84706ce1cac947fedcb0fe9a2b4ee",
+          "md5": "346576be0a4d2335bbf59e2d61197897"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "middleware-3.2.0-sources.jar",
+          "url": "middleware-3.2.0-sources.jar",
+          "size": 2354,
+          "sha512": "fbd5fdf8fed668f4a4c6a664ebd3df5ee70b701d470cd5a020244407def3242aabe2b5b8d8d4093b365347c9d7ee327acd00de1aaad4870ca7c2f1191902fbf5",
+          "sha256": "4cf710824245d9c6ac517cc7c2e4abaf9705bbd877ea1afa648a2752c34c56ab",
+          "sha1": "0df36aa9fe4e0372b5151b2fa5dd6c152b4a56f6",
+          "md5": "32468a3fb25b659cfe2058c17c5aebb9"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "middleware-3.2.0-javadoc.jar",
+          "url": "middleware-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

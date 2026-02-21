@@ -1,0 +1,121 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "memory-type-java",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "memory-type-java-3.2.0.aar",
+          "url": "memory-type-java-3.2.0.aar",
+          "size": 3992,
+          "sha512": "aa26ef7a558f4b6afa3cf050fe34d579ba0457ad49ba1ee91fd12293bc2600fde4d3a40e0ca3c89197d1ad70b3e840bfb970a9c5274d318162abb3a68c7adbd8",
+          "sha256": "c078d745deebbf4c12c2aa0da37aef6577672e27be72981566c08ac12487989f",
+          "sha1": "b9bbe5c1a45282d0bfaa8aac47eca8c5c31880ed",
+          "md5": "0702144f4ff6f048a83aea42154bf9ee"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-native",
+          "version": {
+            "requires": "3.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "memory-type-java-3.2.0.aar",
+          "url": "memory-type-java-3.2.0.aar",
+          "size": 3992,
+          "sha512": "aa26ef7a558f4b6afa3cf050fe34d579ba0457ad49ba1ee91fd12293bc2600fde4d3a40e0ca3c89197d1ad70b3e840bfb970a9c5274d318162abb3a68c7adbd8",
+          "sha256": "c078d745deebbf4c12c2aa0da37aef6577672e27be72981566c08ac12487989f",
+          "sha1": "b9bbe5c1a45282d0bfaa8aac47eca8c5c31880ed",
+          "md5": "0702144f4ff6f048a83aea42154bf9ee"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "memory-type-java-3.2.0-sources.jar",
+          "url": "memory-type-java-3.2.0-sources.jar",
+          "size": 3288,
+          "sha512": "be6823c9ebbf9f20afa0887d0f7a6867f7150f086e423e0a6c2b28d6c22494f96b8a611e1b4f4e9b78899ae8e6693eebf88575e95d6ee342513a95edbcabeee5",
+          "sha256": "46159f54e8d071523de752f7e01f373d34b9bb717cc70371f3d7708c4437a0f3",
+          "sha1": "53879c72d703f179297b5f7a6779bdd40f571b6f",
+          "md5": "5a92e51ecb1f18c1b2190ca8806fa80f"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "memory-type-java-3.2.0-javadoc.jar",
+          "url": "memory-type-java-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "memory-type-ashmem",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "memory-type-ashmem-3.2.0.aar",
+          "url": "memory-type-ashmem-3.2.0.aar",
+          "size": 4368,
+          "sha512": "503c1b812b4a3dd7fa7dd57848ca3f373adb2ed1030b1cbc0b6e0760efee30125a1585ab4be8412868886e6661232df09a253e0476e4daeb3045705dc3610028",
+          "sha256": "5045f12159de7a6e1ca4f5665429050c7678022593c73db9841f5917f2fb09a5",
+          "sha1": "3a1227e11712985625a6ce943417048317da695a",
+          "md5": "983cc1075343513bab522913e591873b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline",
+          "version": {
+            "requires": "3.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "memory-type-ashmem-3.2.0.aar",
+          "url": "memory-type-ashmem-3.2.0.aar",
+          "size": 4368,
+          "sha512": "503c1b812b4a3dd7fa7dd57848ca3f373adb2ed1030b1cbc0b6e0760efee30125a1585ab4be8412868886e6661232df09a253e0476e4daeb3045705dc3610028",
+          "sha256": "5045f12159de7a6e1ca4f5665429050c7678022593c73db9841f5917f2fb09a5",
+          "sha1": "3a1227e11712985625a6ce943417048317da695a",
+          "md5": "983cc1075343513bab522913e591873b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "memory-type-ashmem-3.2.0-sources.jar",
+          "url": "memory-type-ashmem-3.2.0-sources.jar",
+          "size": 3378,
+          "sha512": "1a07d0ca673858edc00ac6ae467f827c4d6717deadb8585c2aaddcb566a3bf84f3759f14229e1bdfc09241914c8a8d25a2ac143f689a8478155c3039cf2789bd",
+          "sha256": "311f6e30bba4478b77c857da6703e41d306453ecc9ea645e4350562059f8dc5e",
+          "sha1": "1a0ead5532b2d18c331ed533bd5f5e94c1207006",
+          "md5": "40e4f483dc6357475a5140898652b443"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "memory-type-ashmem-3.2.0-javadoc.jar",
+          "url": "memory-type-ashmem-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

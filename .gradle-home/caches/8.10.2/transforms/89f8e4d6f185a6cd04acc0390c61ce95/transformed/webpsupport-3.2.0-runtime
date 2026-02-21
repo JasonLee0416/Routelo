@@ -1,0 +1,3 @@
+com.facebook.imagepipeline.nativecode.StaticWebpNativeLoader
+com.facebook.webpsupport.WebPImageDecoder
+com.facebook.webpsupport.WebpBitmapFactoryImpl

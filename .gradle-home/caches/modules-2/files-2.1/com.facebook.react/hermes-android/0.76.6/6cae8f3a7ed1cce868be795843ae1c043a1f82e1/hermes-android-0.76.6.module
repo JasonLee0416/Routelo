@@ -1,0 +1,190 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.react",
+    "module": "hermes-android",
+    "version": "0.76.6",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.11.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "debugVariantDefaultApiPublication",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "hermes-android-0.76.6-debug.aar",
+          "url": "hermes-android-0.76.6-debug.aar",
+          "size": 97355148,
+          "sha512": "5fc78a4a2b6bcd58a2907e650001188329849e38f479c30278cde1844baeb73969996d649d66373a6192347ccd1e43abef417975938db61d0208798e5b7c1c14",
+          "sha256": "aeb91eb4aee07f2ef7d6fc241fddd64470575dd4a7ad3cb1f375bfaa0df2ceb9",
+          "sha1": "4d0711030fcc9844fe631a3ce4c2a60b5d2f588f",
+          "md5": "0913be3fe08fc973372fbe2e94e86df9"
+        }
+      ]
+    },
+    {
+      "name": "debugVariantDefaultRuntimePublication",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fbjni",
+          "module": "fbjni",
+          "version": {
+            "requires": "0.6.0"
+          }
+        },
+        {
+          "group": "com.facebook.yoga",
+          "module": "proguard-annotations",
+          "version": {
+            "requires": "1.19.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.6.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "hermes-android-0.76.6-debug.aar",
+          "url": "hermes-android-0.76.6-debug.aar",
+          "size": 97355148,
+          "sha512": "5fc78a4a2b6bcd58a2907e650001188329849e38f479c30278cde1844baeb73969996d649d66373a6192347ccd1e43abef417975938db61d0208798e5b7c1c14",
+          "sha256": "aeb91eb4aee07f2ef7d6fc241fddd64470575dd4a7ad3cb1f375bfaa0df2ceb9",
+          "sha1": "4d0711030fcc9844fe631a3ce4c2a60b5d2f588f",
+          "md5": "0913be3fe08fc973372fbe2e94e86df9"
+        }
+      ]
+    },
+    {
+      "name": "debugVariantDefaultSourcePublication",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "debug",
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "hermes-android-0.76.6-debug-sources.jar",
+          "url": "hermes-android-0.76.6-debug-sources.jar",
+          "size": 64459,
+          "sha512": "aa01477ee4f0e31f6249c00efc95741ab3ea99555b63098de201a1565ca864e20c91cf9a09a6ea7dca795276bcc86391704838a0f079174607501a8adc10eb5d",
+          "sha256": "4ec26cf99163a72759167fe5db35d21f66c7abd19757f933401db24da5d13074",
+          "sha1": "6cf384b0838d29ad8c2a6a192c31e445cb86f69c",
+          "md5": "8d9a0441a3affba039232584e075c739"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantDefaultApiPublication",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "release",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "hermes-android-0.76.6-release.aar",
+          "url": "hermes-android-0.76.6-release.aar",
+          "size": 65755649,
+          "sha512": "dce3d2cc344819dc024b850f5d2e0fb9fcf1a39adc11e0672b7100f4f6f30e74a9c76d2d6e2969c59f5089fb62ebeaff26eca5feebee8c994443d2e7f3a153e6",
+          "sha256": "f2670a91630501c048af5ef0d2ca39cce26b0eec42c2570d5df7b610ff0ce143",
+          "sha1": "3587764e872dc27acfe121a88ae0cc55a087995b",
+          "md5": "000c2d94fa8cafe865e48fc84f389795"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantDefaultRuntimePublication",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "release",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fbjni",
+          "module": "fbjni",
+          "version": {
+            "requires": "0.6.0"
+          }
+        },
+        {
+          "group": "com.facebook.yoga",
+          "module": "proguard-annotations",
+          "version": {
+            "requires": "1.19.0"
+          }
+        },
+        {
+          "group": "androidx.annotation",
+          "module": "annotation",
+          "version": {
+            "requires": "1.6.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "hermes-android-0.76.6-release.aar",
+          "url": "hermes-android-0.76.6-release.aar",
+          "size": 65755649,
+          "sha512": "dce3d2cc344819dc024b850f5d2e0fb9fcf1a39adc11e0672b7100f4f6f30e74a9c76d2d6e2969c59f5089fb62ebeaff26eca5feebee8c994443d2e7f3a153e6",
+          "sha256": "f2670a91630501c048af5ef0d2ca39cce26b0eec42c2570d5df7b610ff0ce143",
+          "sha1": "3587764e872dc27acfe121a88ae0cc55a087995b",
+          "md5": "000c2d94fa8cafe865e48fc84f389795"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantDefaultSourcePublication",
+      "attributes": {
+        "com.android.build.api.attributes.BuildTypeAttr": "release",
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "hermes-android-0.76.6-release-sources.jar",
+          "url": "hermes-android-0.76.6-release-sources.jar",
+          "size": 64446,
+          "sha512": "f330c77f3a3580aa2883bf3666a6a352c5fe65805c36543abce1225aaa8b3251f578525262d7989df67abc09232b62f116c2e9636f36acca157cde7f0a86eda4",
+          "sha256": "cfbc23f2f3cb014fa340b71a28da6a644a08b734b58b489e140a7311ac81912c",
+          "sha1": "826736e9de58eff4ff71f0e9202ba3a9341c37f7",
+          "md5": "3ac892397355cfcbb5fb83647548305a"
+        }
+      ]
+    }
+  ]
+}

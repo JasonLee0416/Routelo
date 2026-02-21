@@ -1,0 +1,156 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "drawee",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "drawee-3.2.0.aar",
+          "url": "drawee-3.2.0.aar",
+          "size": 143125,
+          "sha512": "5d7f93eb1a88d7c81e0836a22e1400e489ade6580892ef090d2d82c8193c4234d8d7690aa93f596a8343bb4ae032a86a3a1e6a354f08a3596013598385c84f5f",
+          "sha256": "312a5474a4d6a0b80ef845c02d2c618de9012871baafffbfbc607c363268e8c0",
+          "sha1": "07c6f0078c62ace58aaf4b92efca190426ed4f40",
+          "md5": "c3aed4670138c0506cc041b76150e84c"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-native",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "memory-type-ashmem",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "memory-type-native",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "memory-type-java",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "ui-common",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "middleware",
+          "version": {
+            "requires": "3.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "drawee-3.2.0.aar",
+          "url": "drawee-3.2.0.aar",
+          "size": 143125,
+          "sha512": "5d7f93eb1a88d7c81e0836a22e1400e489ade6580892ef090d2d82c8193c4234d8d7690aa93f596a8343bb4ae032a86a3a1e6a354f08a3596013598385c84f5f",
+          "sha256": "312a5474a4d6a0b80ef845c02d2c618de9012871baafffbfbc607c363268e8c0",
+          "sha1": "07c6f0078c62ace58aaf4b92efca190426ed4f40",
+          "md5": "c3aed4670138c0506cc041b76150e84c"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "drawee-3.2.0-sources.jar",
+          "url": "drawee-3.2.0-sources.jar",
+          "size": 100593,
+          "sha512": "4d9ce8c98548545df251229fdb7bd59de503a9c025e74ff2a69729542e8d4cf3166a0530ee70597d12084bb4581c71040d7b684ce13d7cb9a624ef65e42edd6e",
+          "sha256": "be5910d93347698b3572555589d3d177489e8360fe36d4c5ad54493eb4aa56c4",
+          "sha1": "a66fde6f33053c7bc989aa8b9274052a224e9169",
+          "md5": "951dc7e16116d2d5fb12492d00911244"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "drawee-3.2.0-javadoc.jar",
+          "url": "drawee-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "vito-renderer",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "vito-renderer-3.2.0.aar",
+          "url": "vito-renderer-3.2.0.aar",
+          "size": 24164,
+          "sha512": "02c1d8e2a7e7a7ff5491d56e6b53d7eb8e0f447f963eae702c4369480306e9d28661fc524b8d8b20ff41af04a2235226dbc7e488df2852975507d0839eaa7c23",
+          "sha256": "0a21bef743818ea11193988ea13475b4f22b741b195bdf65645ad4e6a763c6fc",
+          "sha1": "89fadb0f277db306d144e24bc569deec57d1c5cb",
+          "md5": "897d8c68ea0cad897da612c8c39c670b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "vito-renderer-3.2.0.aar",
+          "url": "vito-renderer-3.2.0.aar",
+          "size": 24164,
+          "sha512": "02c1d8e2a7e7a7ff5491d56e6b53d7eb8e0f447f963eae702c4369480306e9d28661fc524b8d8b20ff41af04a2235226dbc7e488df2852975507d0839eaa7c23",
+          "sha256": "0a21bef743818ea11193988ea13475b4f22b741b195bdf65645ad4e6a763c6fc",
+          "sha1": "89fadb0f277db306d144e24bc569deec57d1c5cb",
+          "md5": "897d8c68ea0cad897da612c8c39c670b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "vito-renderer-3.2.0-sources.jar",
+          "url": "vito-renderer-3.2.0-sources.jar",
+          "size": 5855,
+          "sha512": "452a1a04e1d52b11336e2868dc2c1ac7ed6359328162c4400a0b2230d4d3a832d8a362191f785a871b0c163f1db6e103089374f9741c92fe225e1ee6105b5811",
+          "sha256": "c817ef230f47130e4ab0f56b53be1055138a020c11e6bf888319c37d6d7fc348",
+          "sha1": "fca2163744d939386fca22935d894882c7bdfd43",
+          "md5": "f493197ee62257511dd080a87f7c343d"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "vito-renderer-3.2.0-javadoc.jar",
+          "url": "vito-renderer-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

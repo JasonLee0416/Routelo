@@ -1,0 +1,12 @@
+com.facebook.fresco.vito.options.BorderOptions
+com.facebook.fresco.vito.options.BorderOptions$Companion
+com.facebook.fresco.vito.options.DecodedImageOptions
+com.facebook.fresco.vito.options.DecodedImageOptions$Builder
+com.facebook.fresco.vito.options.EncodedImageOptions
+com.facebook.fresco.vito.options.EncodedImageOptions$Builder
+com.facebook.fresco.vito.options.ImageOptions
+com.facebook.fresco.vito.options.ImageOptions$Builder
+com.facebook.fresco.vito.options.ImageOptions$Companion
+com.facebook.fresco.vito.options.ImageOptionsDrawableFactory
+com.facebook.fresco.vito.options.RoundingOptions
+com.facebook.fresco.vito.options.RoundingOptions$Companion

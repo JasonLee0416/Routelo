@@ -1,0 +1,128 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "nativeimagetranscoder",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "nativeimagetranscoder-3.2.0.aar",
+          "url": "nativeimagetranscoder-3.2.0.aar",
+          "size": 802526,
+          "sha512": "207c365fc8660f2fa8e53e6ff017ef10ee6cf501ff22cdfca51d94634a590a7d09594b4c088abfdc0a724a17ab7b5f1cdbd34deea2afb3b8ab03a41ca9c30c50",
+          "sha256": "e49cae44cfbbe9b12428e0b4330d61e009bd0208cb84b9d19e3489ecd715921b",
+          "sha1": "32f68713faad6196bbeb211827da207a09a46ef0",
+          "md5": "85314a6d2a9233339660b9d2c1c7c8a5"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-base",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.soloader",
+          "module": "nativeloader",
+          "version": {
+            "requires": "0.10.5"
+          }
+        },
+        {
+          "group": "com.parse.bolts",
+          "module": "bolts-tasks",
+          "version": {
+            "requires": "1.4.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "nativeimagetranscoder-3.2.0.aar",
+          "url": "nativeimagetranscoder-3.2.0.aar",
+          "size": 802526,
+          "sha512": "207c365fc8660f2fa8e53e6ff017ef10ee6cf501ff22cdfca51d94634a590a7d09594b4c088abfdc0a724a17ab7b5f1cdbd34deea2afb3b8ab03a41ca9c30c50",
+          "sha256": "e49cae44cfbbe9b12428e0b4330d61e009bd0208cb84b9d19e3489ecd715921b",
+          "sha1": "32f68713faad6196bbeb211827da207a09a46ef0",
+          "md5": "85314a6d2a9233339660b9d2c1c7c8a5"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "nativeimagetranscoder-3.2.0-sources.jar",
+          "url": "nativeimagetranscoder-3.2.0-sources.jar",
+          "size": 4535,
+          "sha512": "a7d2a93ecbea698781a8e98b4d83e5cf1408bc0ffa00cbe8d331a1695d338bf606c0062f31aca26f06fdfdef5d81c49c57c602118d6a642da52a4b8aa770686f",
+          "sha256": "daa7afb321472af1d280c496b586949d3850206d2521abd50086fb3d89ce6e49",
+          "sha1": "36546d2fb368704ac6351096049194a674aa4f2e",
+          "md5": "99acfc2609e9332bfdbc0533200e39bb"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "nativeimagetranscoder-3.2.0-javadoc.jar",
+          "url": "nativeimagetranscoder-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

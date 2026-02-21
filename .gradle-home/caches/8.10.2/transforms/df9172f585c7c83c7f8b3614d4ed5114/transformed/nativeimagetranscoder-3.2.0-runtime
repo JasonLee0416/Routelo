@@ -1,0 +1,3 @@
+com.facebook.imagepipeline.nativecode.NativeJpegTranscoder
+com.facebook.imagepipeline.nativecode.NativeJpegTranscoderFactory
+com.facebook.imagepipeline.nativecode.NativeJpegTranscoderSoLoader

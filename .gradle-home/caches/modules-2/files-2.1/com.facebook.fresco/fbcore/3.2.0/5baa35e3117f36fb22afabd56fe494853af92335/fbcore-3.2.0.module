@@ -1,0 +1,123 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "fbcore",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "fbcore-3.2.0.aar",
+          "url": "fbcore-3.2.0.aar",
+          "size": 144108,
+          "sha512": "32933e232e2700db07517239e9b731eec435bda5b43e8eba2cfbb24391dc4f7fc755698b044d63a156be270a19cedd8bf1ae29c605a0e7ca2030f0dfbc26d54f",
+          "sha256": "1dd1e2b6790d175e6324129d3be89cde6a0202fa355e25598cffab055c822642",
+          "sha1": "e6103082ebdecc06ba0304dba7d8078961d1313e",
+          "md5": "93a6542ef659c2bbcc09bdb8514fdeef"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.core",
+          "module": "core",
+          "version": {
+            "requires": "1.3.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "fbcore-3.2.0.aar",
+          "url": "fbcore-3.2.0.aar",
+          "size": 144108,
+          "sha512": "32933e232e2700db07517239e9b731eec435bda5b43e8eba2cfbb24391dc4f7fc755698b044d63a156be270a19cedd8bf1ae29c605a0e7ca2030f0dfbc26d54f",
+          "sha256": "1dd1e2b6790d175e6324129d3be89cde6a0202fa355e25598cffab055c822642",
+          "sha1": "e6103082ebdecc06ba0304dba7d8078961d1313e",
+          "md5": "93a6542ef659c2bbcc09bdb8514fdeef"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "fbcore-3.2.0-sources.jar",
+          "url": "fbcore-3.2.0-sources.jar",
+          "size": 122099,
+          "sha512": "72afaf1cb3fa5730301f7b241d3f1845dadd231fa6ea40c5abc4f8f343cb09b0eb53a54e705846a4edb6ca8bd4d768d6bbd86e8920a8932c82b3149de9d5cb85",
+          "sha256": "38bdebd62a7f051e3c2b2a35a35ab5605521105338822c129ccf128f2a25c474",
+          "sha1": "fc2a26fa1450a5c66faede074ff31484e4c6794f",
+          "md5": "16551eb14923cb130a4badc4754b6af5"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "fbcore-3.2.0-javadoc.jar",
+          "url": "fbcore-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

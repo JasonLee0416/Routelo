@@ -1,0 +1,151 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "animated-drawable",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "animated-drawable-3.2.0.aar",
+          "url": "animated-drawable-3.2.0.aar",
+          "size": 94856,
+          "sha512": "af13918219cd1bb2ec9d814c9cefdbedd86c5735cdd58b2d933b492e847de8af25206be8a194de9f02c595c413eb045910a31e737ad563584ac634b9831a141f",
+          "sha256": "17c9fd089a2fa9dbf3d5f8c2e8d5a0fb9d80ee55beba3c1ed1257beaf91578e2",
+          "sha1": "85b2af7b9fcd980fa7a9b8de2eb4bb914df9dfbf",
+          "md5": "d2df463ab7bb8f869f6a41a32da05400"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline-base",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "drawee",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "vito-renderer",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "vito-options",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk8",
+          "version": {
+            "requires": "1.8.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "animated-drawable-3.2.0.aar",
+          "url": "animated-drawable-3.2.0.aar",
+          "size": 94856,
+          "sha512": "af13918219cd1bb2ec9d814c9cefdbedd86c5735cdd58b2d933b492e847de8af25206be8a194de9f02c595c413eb045910a31e737ad563584ac634b9831a141f",
+          "sha256": "17c9fd089a2fa9dbf3d5f8c2e8d5a0fb9d80ee55beba3c1ed1257beaf91578e2",
+          "sha1": "85b2af7b9fcd980fa7a9b8de2eb4bb914df9dfbf",
+          "md5": "d2df463ab7bb8f869f6a41a32da05400"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "animated-drawable-3.2.0-sources.jar",
+          "url": "animated-drawable-3.2.0-sources.jar",
+          "size": 44335,
+          "sha512": "2b566ac515c77c83df013ab5cda07f6920f460a933537f2de176b0b7d33ad9385d5048c07f1d98c72f9022bd7fb566c78e5cbf94529e56b1d4eb26eccce6fc03",
+          "sha256": "308925c442407f6707507144672b43c18196cfe0bd2ca102c4baa988e1488622",
+          "sha1": "29ede2ae0f7225d277ed7e88f793a0d39d05f6a0",
+          "md5": "0b5a838ee56590ac0d36f1813c31a459"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "animated-drawable-3.2.0-javadoc.jar",
+          "url": "animated-drawable-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

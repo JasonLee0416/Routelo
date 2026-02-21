@@ -1,0 +1,121 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.facebook.fresco",
+    "module": "imagepipeline-native",
+    "version": "3.2.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-native-3.2.0.aar",
+          "url": "imagepipeline-native-3.2.0.aar",
+          "size": 23839,
+          "sha512": "d515f9cd7e4190b6942b7ffc7481ed3d8110f8efc4ae85393109e2d3a77fb2e7df1e3a31d5296d21bcfd43e208842f298ec54d94a60b3267c2a0824f80650fb0",
+          "sha256": "68e9433260542d34dff3666c0d5612ccdd19a8a72cba2bd89359f56ff1e8b22e",
+          "sha1": "f932c917f0115d1b6be480de176fc54475fef400",
+          "md5": "1150df221f3e0608309f7e8a154edf57"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.facebook.fresco",
+          "module": "imagepipeline",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.fresco",
+          "module": "fbcore",
+          "version": {
+            "requires": "3.2.0"
+          }
+        },
+        {
+          "group": "com.facebook.soloader",
+          "module": "soloader",
+          "version": {
+            "requires": "0.10.5"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "imagepipeline-native-3.2.0.aar",
+          "url": "imagepipeline-native-3.2.0.aar",
+          "size": 23839,
+          "sha512": "d515f9cd7e4190b6942b7ffc7481ed3d8110f8efc4ae85393109e2d3a77fb2e7df1e3a31d5296d21bcfd43e208842f298ec54d94a60b3267c2a0824f80650fb0",
+          "sha256": "68e9433260542d34dff3666c0d5612ccdd19a8a72cba2bd89359f56ff1e8b22e",
+          "sha1": "f932c917f0115d1b6be480de176fc54475fef400",
+          "md5": "1150df221f3e0608309f7e8a154edf57"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-native-3.2.0-sources.jar",
+          "url": "imagepipeline-native-3.2.0-sources.jar",
+          "size": 8714,
+          "sha512": "69330176c71367d5129f830aaa37845ce94c6f86f78f184db72a4c85d68f001ba29145d5f73667cdd40fde29caa8d8603db46c765eb37528acca393bac17010e",
+          "sha256": "bf778a38ae79fe81bb562160b99b0f44772060583dad6a941847552b5160276f",
+          "sha1": "808d2f7a85a68dc2decd72ffa4f9466ff19e3fc7",
+          "md5": "037cebf71ef4d323657030ffbba0808f"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseJavaDocPublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "javadoc",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "imagepipeline-native-3.2.0-javadoc.jar",
+          "url": "imagepipeline-native-3.2.0-javadoc.jar",
+          "size": 261,
+          "sha512": "1487e5a20c9e4d74f298e07c42e96a61be11b7a768c3fbc199ee138cd68e1fc2267d1cfe3f11f288acc05df755315344d052cc5f6f751f126ab4fe1caa5125ea",
+          "sha256": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3",
+          "sha1": "2ad14aed781c4a73ed4dbb421966d408a0a06686",
+          "md5": "f43436d6bec321290f6af228ad602604"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+com.facebook.fresco.middleware.HasExtraData
+com.facebook.fresco.middleware.HasExtraData$Companion
+com.facebook.fresco.middleware.HasExtraData$DefaultImpls
+com.facebook.fresco.middleware.HasExtraDataKt
+com.facebook.fresco.middleware.MiddlewareUtils
