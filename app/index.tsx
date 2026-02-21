@@ -2,10 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import * as Location from 'expo-location';
 import { Stack } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
-  FlatList,
+  Linking,
+  Platform,
   ScrollView,
   StyleSheet,
   Switch,
@@ -14,57 +15,118 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import KakaoMap, { KakaoMapRef } from '../components/KakaoMap';
-import { KAKAO_CONFIG } from '../kakao-config';
+import KakaoMap, { KakaoMapRef } from './components/KakaoMap';
+import { KAKAO_CONFIG } from './kakao-config';
 
-interface Destination {
+type ViewMode = 'list' | 'map' | 'settings';
+type ThemeMode = 'light' | 'dark';
+
+type Theme = {
+  bg: string;
+  card: string;
+  cardAlt: string;
+  text: string;
+  textMuted: string;
+  border: string;
+  accent: string;
+  danger: string;
+};
+
+type Destination = {
   id: number;
   address: string;
   lat: number;
   lng: number;
-}
+};
 
-interface SearchResult {
+type SearchResult = {
   place_name: string;
   address_name: string;
-  road_address_name: string;
-  x: string; // longitude
-  y: string; // latitude
+  road_address_name?: string;
+  x: string;
+  y: string;
+};
+
+const LIGHT_THEME: Theme = {
+  bg: '#f4f6f8',
+  card: '#ffffff',
+  cardAlt: '#eef2f5',
+  text: '#0f172a',
+  textMuted: '#64748b',
+  border: '#dbe1e8',
+  accent: '#14a760',
+  danger: '#c0392b',
+};
+
+const DARK_THEME: Theme = {
+  bg: '#0f1217',
+  card: '#171c22',
+  cardAlt: '#212832',
+  text: '#ecf2f8',
+  textMuted: '#98a6b8',
+  border: '#2b3441',
+  accent: '#29cc7a',
+  danger: '#ff7373',
+};
+
+const BRAND_NAME = '√lo';
+const TMAP_ANDROID_MARKET_URL = 'market://details?id=com.skt.tmap.ku';
+const TMAP_ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku';
+const TMAP_IOS_STORE_URL = 'https://apps.apple.com/kr/app/id431589174';
+
+function toAddressText(item: SearchResult) {
+  return item.road_address_name || item.address_name || item.place_name;
 }
 
-export default function Index() {
-  // --- 상태 변수 ---
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [viewMode, setViewMode] = useState<'list' | 'detail' | 'settings'>('list');
-  const [tempAddress, setTempAddress] = useState('');
-  const [tempCoords, setTempCoords] = useState({ lat: 0, lng: 0 });
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
-
-  // --- 설정 ---
-  const [isDarkMode, setIsDarkMode] = useState(false);
+export default function Home() {
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
+  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
   const [brightness, setBrightness] = useState(0.8);
   const [isExpertMode, setIsExpertMode] = useState(false);
 
-  // --- Refs ---
+  const [currentLocation, setCurrentLocation] = useState<Location.LocationObject | null>(null);
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [query, setQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [selectedPoint, setSelectedPoint] = useState<{ lat: number; lng: number } | null>(null);
+
+  const [isMapReady, setIsMapReady] = useState(false);
+  const [mapErrorMessage, setMapErrorMessage] = useState('');
+  const mapErrorShownRef = useRef(false);
   const mapRef = useRef<KakaoMapRef>(null);
 
-  // 1. 초기 권한 및 위치 설정
+  const isDarkMode = themeMode === 'dark';
+  const theme = isDarkMode ? DARK_THEME : LIGHT_THEME;
+  const styles = useMemo(() => createStyles(theme), [theme]);
+
   useEffect(() => {
+    let mounted = true;
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (!mounted) return;
+
       if (status !== 'granted') {
-        Alert.alert('권한 거부', '위치 정보 권한이 필요합니다.');
+        Alert.alert('권한 필요', '현재 위치 권한이 있어야 경로 최적화를 정확히 할 수 있습니다.');
         return;
       }
-      let curr = await Location.getCurrentPositionAsync({});
-      setLocation(curr);
+
+      try {
+        const loc = await Location.getCurrentPositionAsync({});
+        if (mounted) setCurrentLocation(loc);
+      } catch {
+        if (mounted) {
+          Alert.alert('위치 오류', '현재 위치를 가져오지 못했습니다.');
+        }
+      }
     })();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  // 2. 거리/시간 계산
-  const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const getDistanceKm = (lat1: number, lon1: number, lat2: number, lon2: number) => {
     const R = 6371;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -78,234 +140,372 @@ export default function Index() {
     return parseFloat((R * c).toFixed(1));
   };
 
-  const getArrivalTime = (startTime: Date, totalKm: number) => {
-    const travelTimeMinutes = totalKm * 3;
-    const arrivalDate = new Date(startTime.getTime() + travelTimeMinutes * 60000);
-    return `${arrivalDate.getHours()}:${arrivalDate.getMinutes().toString().padStart(2, '0')}`;
+  const getEta = (startTime: Date, totalKm: number) => {
+    const minutes = Math.round(totalKm * 3);
+    const t = new Date(startTime.getTime() + minutes * 60000);
+    return `${t.getHours()}:${t.getMinutes().toString().padStart(2, '0')}`;
   };
 
-  // 3. 카카오 로컬 API로 주소/장소 검색
+  const searchNominatim = async (keyword: string): Promise<SearchResult[]> => {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&limit=7&q=${encodeURIComponent(keyword)}`,
+      {
+        headers: {
+          Accept: 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Nominatim HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (!Array.isArray(data)) return [];
+
+    return data.map((item: any) => ({
+      place_name: String(item.display_name || keyword),
+      address_name: String(item.display_name || keyword),
+      road_address_name: String(item.display_name || ''),
+      x: String(item.lon),
+      y: String(item.lat),
+    }));
+  };
+
   const searchAddress = async () => {
-    if (tempAddress.length < 2) return;
+    const trimmed = query.trim();
+    if (trimmed.length < 2) return;
+
     setIsSearching(true);
     setSearchResults([]);
 
     try {
-      // 키워드로 장소 검색 (카카오 로컬 API)
-      const res = await fetch(
-        `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(
-          tempAddress
-        )}&size=5`,
-        {
-          headers: {
-            Authorization: `KakaoAK ${KAKAO_CONFIG.REST_KEY}`,
-          },
-        }
+      const keywordRes = await fetch(
+        `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(trimmed)}&size=7`,
+        { headers: { Authorization: `KakaoAK ${KAKAO_CONFIG.REST_KEY}` } }
       );
-      const data = await res.json();
+      const keywordData = await keywordRes.json().catch(() => ({}));
 
-      if (data.documents && data.documents.length > 0) {
-        setSearchResults(data.documents);
+      if (!keywordRes.ok) {
+        throw new Error(`Kakao keyword HTTP ${keywordRes.status}`);
+      }
+
+      if (keywordData?.documents?.length > 0) {
+        setSearchResults(keywordData.documents);
+        return;
+      }
+
+      const addressRes = await fetch(
+        `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(trimmed)}&size=7`,
+        { headers: { Authorization: `KakaoAK ${KAKAO_CONFIG.REST_KEY}` } }
+      );
+      const addressData = await addressRes.json().catch(() => ({}));
+
+      if (!addressRes.ok) {
+        throw new Error(`Kakao address HTTP ${addressRes.status}`);
+      }
+
+      if (addressData?.documents?.length > 0) {
+        const mapped = addressData.documents.map((d: any) => ({
+          place_name: d.address_name,
+          address_name: d.address_name,
+          road_address_name: d.road_address?.address_name || '',
+          x: d.x,
+          y: d.y,
+        }));
+        setSearchResults(mapped);
       } else {
-        // 키워드 검색 실패 시 주소 검색 시도
-        const addrRes = await fetch(
-          `https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(
-            tempAddress
-          )}&size=5`,
-          {
-            headers: {
-              Authorization: `KakaoAK ${KAKAO_CONFIG.REST_KEY}`,
-            },
-          }
-        );
-        const addrData = await addrRes.json();
-
-        if (addrData.documents && addrData.documents.length > 0) {
-          setSearchResults(
-            addrData.documents.map((d: any) => ({
-              place_name: d.address_name,
-              address_name: d.address_name,
-              road_address_name: d.road_address?.address_name || '',
-              x: d.x,
-              y: d.y,
-            }))
-          );
+        const fallback = await searchNominatim(trimmed);
+        if (fallback.length > 0) {
+          setSearchResults(fallback);
+          Alert.alert('대체 검색 사용', '카카오 결과가 없어 대체 검색 결과를 표시합니다.');
         } else {
-          Alert.alert('알림', '검색 결과가 없습니다.');
+          Alert.alert('검색 결과 없음', '다른 키워드로 다시 검색해 주세요.');
         }
       }
-    } catch (e) {
-      console.error('Search error:', e);
-      Alert.alert('에러', '검색에 실패했습니다. 네트워크를 확인해주세요.');
+    } catch (error: any) {
+      try {
+        const fallback = await searchNominatim(trimmed);
+        if (fallback.length > 0) {
+          setSearchResults(fallback);
+          Alert.alert('대체 검색 사용', '카카오 검색 실패로 대체 검색 결과를 표시합니다.');
+          return;
+        }
+      } catch {
+        // no-op
+      }
+      const message = typeof error?.message === 'string' ? error.message : 'unknown error';
+      Alert.alert('검색 실패', `네트워크 또는 API 설정을 확인해 주세요.\n(${message})`);
     } finally {
       setIsSearching(false);
     }
   };
 
-  // 검색 결과 선택
-  const selectSearchResult = (result: SearchResult) => {
-    const lat = parseFloat(result.y);
-    const lng = parseFloat(result.x);
-    setTempCoords({ lat, lng });
-    setTempAddress(result.road_address_name || result.address_name || result.place_name);
-    setSearchResults([]);
+  const addDestination = (address: string, lat: number, lng: number) => {
+    setDestinations((prev) => [...prev, { id: Date.now() + Math.random(), address, lat, lng }]);
+  };
 
-    // 지도 이동
+  const addFromSearchResult = (item: SearchResult) => {
+    const lat = parseFloat(item.y);
+    const lng = parseFloat(item.x);
+    const address = toAddressText(item);
+
+    addDestination(address, lat, lng);
+    setQuery('');
+    setSearchResults([]);
+    setSelectedPoint(null);
     mapRef.current?.moveTo(lat, lng);
   };
 
-  // 목적지 저장
-  const saveDestination = () => {
-    if (tempCoords.lat === 0) {
-      Alert.alert('알림', '검색 결과에서 위치를 선택해주세요.');
-      return;
-    }
-    setDestinations([
-      ...destinations,
-      { address: tempAddress, lat: tempCoords.lat, lng: tempCoords.lng, id: Date.now() },
-    ]);
-    setTempAddress('');
-    setTempCoords({ lat: 0, lng: 0 });
+  const focusSearchResultOnMap = (item: SearchResult) => {
+    const lat = parseFloat(item.y);
+    const lng = parseFloat(item.x);
+    setQuery(toAddressText(item));
     setSearchResults([]);
-    setViewMode('list');
+    setSelectedPoint({ lat, lng });
+    mapRef.current?.moveTo(lat, lng);
   };
 
-  // 경로 최적화 (Nearest Neighbor)
+  const removeDestination = (id: number) => {
+    setDestinations((prev) => prev.filter((d) => d.id !== id));
+  };
+
   const optimizeRoute = () => {
-    if (!location || destinations.length === 0) return;
-    let unvisited = [...destinations];
-    let optimized: Destination[] = [];
-    let current = { lat: location.coords.latitude, lng: location.coords.longitude };
-    while (unvisited.length > 0) {
-      let closestIdx = 0;
-      let min = Infinity;
-      unvisited.forEach((dest, i) => {
-        let d = Math.sqrt(
-          Math.pow(dest.lat - current.lat, 2) + Math.pow(dest.lng - current.lng, 2)
-        );
-        if (d < min) {
-          min = d;
-          closestIdx = i;
+    if (!currentLocation || destinations.length === 0) return;
+
+    const sorted: Destination[] = [];
+    const remaining = [...destinations];
+    let cursor = {
+      lat: currentLocation.coords.latitude,
+      lng: currentLocation.coords.longitude,
+    };
+
+    while (remaining.length > 0) {
+      let closestIndex = 0;
+      let minDistance = Infinity;
+
+      remaining.forEach((d, i) => {
+        const dist = Math.sqrt(Math.pow(d.lat - cursor.lat, 2) + Math.pow(d.lng - cursor.lng, 2));
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestIndex = i;
         }
       });
-      optimized.push(unvisited[closestIdx]);
-      current = { lat: unvisited[closestIdx].lat, lng: unvisited[closestIdx].lng };
-      unvisited.splice(closestIdx, 1);
+
+      const next = remaining.splice(closestIndex, 1)[0];
+      sorted.push(next);
+      cursor = { lat: next.lat, lng: next.lng };
     }
-    setDestinations(optimized);
-    Alert.alert('Routelo', '동선 최적화 완료! ⚡');
+
+    setDestinations(sorted);
+    Alert.alert(BRAND_NAME, '목적지를 가까운 순서로 정렬했습니다.');
   };
 
-  // 카카오맵 앱으로 길안내
-  const openKakaoNavi = (dest: Destination) => {
+  const openUrlSafely = async (url: string) => {
+    try {
+      await Linking.openURL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const openTmapNavigation = async (dest: Destination) => {
+    const encoded = encodeURIComponent(dest.address);
+    const deepLinks = [
+      `tmap://route?rGoName=${encoded}&rGoX=${dest.lng}&rGoY=${dest.lat}`,
+      `tmap://?rGoName=${encoded}&rGoX=${dest.lng}&rGoY=${dest.lat}`,
+    ];
+
+    for (const link of deepLinks) {
+      const ok = await openUrlSafely(link);
+      if (ok) return;
+    }
+
+    if (Platform.OS === 'android') {
+      const marketOpened = await openUrlSafely(TMAP_ANDROID_MARKET_URL);
+      if (!marketOpened) await openUrlSafely(TMAP_ANDROID_STORE_URL);
+    } else {
+      await openUrlSafely(TMAP_IOS_STORE_URL);
+    }
+  };
+
+  const confirmOpenNavigation = (dest: Destination) => {
+    Alert.alert('길안내 시작', `${dest.address}까지 Tmap으로 이동할까요?`, [
+      { text: '취소', style: 'cancel' },
+      { text: '이동', onPress: () => void openTmapNavigation(dest) },
+    ]);
+  };
+
+  const handleMapReady = () => {
+    setIsMapReady(true);
+    setMapErrorMessage('');
+    mapErrorShownRef.current = false;
+  };
+
+  const handleMapError = (message: string) => {
+    setIsMapReady(false);
+    setMapErrorMessage(message);
+    if (mapErrorShownRef.current) return;
+    mapErrorShownRef.current = true;
     Alert.alert(
-      '길안내',
-      `${dest.address}로 길안내를 시작할까요?`,
-      [
-        { text: '취소', style: 'cancel' },
-        {
-          text: '카카오맵으로 열기',
-          onPress: () => {
-            // 카카오맵 딥링크: kakaomap://route?sp=lat,lng&ep=lat,lng&by=CAR
-            // Linking.openURL(...) 사용
-          },
-        },
-      ]
+      '지도 로딩 실패',
+      `${message}\n\nKakao 개발자 콘솔에서 "플랫폼 > Web > 사이트 도메인"에 https://localhost 를 등록했는지 확인해 주세요.`
     );
   };
 
-  // --- 스타일 헬퍼 ---
-  const t = (light: string, dark: string) => (isDarkMode ? dark : light);
+  const fetchAddressByCoord = async (lat: number, lng: number) => {
+    try {
+      const res = await fetch(
+        `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`,
+        { headers: { Authorization: `KakaoAK ${KAKAO_CONFIG.REST_KEY}` } }
+      );
+      const data = await res.json();
+      const doc = data?.documents?.[0];
+      if (!doc) return;
 
-  // ============================================================
-  // [화면 1: 메인 리스트]
-  // ============================================================
+      const address = doc.road_address?.address_name || doc.address?.address_name || '';
+      if (address) setQuery(address);
+    } catch {
+      // no-op
+    }
+  };
+
+  const saveSelectedPoint = () => {
+    if (!selectedPoint) {
+      Alert.alert('선택 필요', '지도에서 위치를 먼저 선택해 주세요.');
+      return;
+    }
+    const address = query.trim() || `${selectedPoint.lat.toFixed(5)}, ${selectedPoint.lng.toFixed(5)}`;
+    addDestination(address, selectedPoint.lat, selectedPoint.lng);
+    setQuery('');
+    setSearchResults([]);
+    setSelectedPoint(null);
+    setViewMode('list');
+  };
+
   if (viewMode === 'list') {
     let accumulatedKm = 0;
     const now = new Date();
 
     return (
-      <View style={[styles.container, { backgroundColor: t('#fff', '#121212') }]}>
+      <View style={styles.container}>
         <Stack.Screen
           options={{
-            title: 'Routelo',
-            headerRight: () => (
-              <TouchableOpacity onPress={() => setViewMode('settings')}>
-                <Ionicons name="settings-outline" size={24} color={t('#333', '#fff')} />
-              </TouchableOpacity>
-            ),
-            headerTitleStyle: { color: '#2ecc71', fontWeight: '900' },
+            title: BRAND_NAME,
+            headerStyle: { backgroundColor: theme.bg },
+            headerTintColor: theme.text,
+            headerTitleStyle: {
+              color: theme.accent,
+              fontFamily: Platform.select({
+                ios: 'SnellRoundhand-Bold',
+                android: 'cursive',
+                default: 'serif',
+              }),
+              fontSize: 30,
+            },
           }}
         />
 
-        <View style={styles.listHeader}>
-          <Text style={styles.mainEmoji}>🛵</Text>
-          <Text style={styles.mainTitle}>Routelo</Text>
-          <Text style={[styles.mainSubtitle, { color: t('#888', '#aaa') }]}>
-            오늘의 배달 동선을 확인하세요.
-          </Text>
+        <TouchableOpacity style={styles.floatingSettingsBtn} onPress={() => setViewMode('settings')}>
+          <Ionicons name="settings-outline" size={22} color={theme.text} />
+        </TouchableOpacity>
+
+        <View style={styles.hero}>
+          <Text style={styles.heroTitle}>{BRAND_NAME}</Text>
+          <Text style={styles.heroSubtitle}>같은 길도, 적은 힘으로, 오늘도 안전운전!</Text>
         </View>
 
-        <ScrollView style={styles.listBody}>
-          <View style={[styles.card, { backgroundColor: t('#fff', '#1e1e1e') }]}>
-            <View style={styles.cardHeader}>
-              <Text style={[styles.label, { color: t('#333', '#fff') }]}>
-                목적지 ({destinations.length})
-              </Text>
-              {destinations.length > 0 && (
-                <TouchableOpacity onPress={optimizeRoute}>
-                  <Text style={styles.optLink}>⚡ 최적화</Text>
-                </TouchableOpacity>
-              )}
+        <ScrollView style={styles.body} contentContainerStyle={{ paddingBottom: 24 }}>
+          <View style={styles.card}>
+            <Text style={[styles.label, { marginBottom: 10 }]}>주소 검색</Text>
+            <View style={styles.searchRow}>
+              <TextInput
+                style={styles.searchInput}
+                value={query}
+                onChangeText={(text) => {
+                  setQuery(text);
+                  if (!text.trim()) setSearchResults([]);
+                }}
+                placeholder="주소/장소를 검색해서 목적지 추가"
+                placeholderTextColor={theme.textMuted}
+                onSubmitEditing={searchAddress}
+                returnKeyType="search"
+              />
+              <TouchableOpacity
+                style={[styles.searchBtn, (isSearching || query.trim().length < 2) && { opacity: 0.5 }]}
+                onPress={searchAddress}
+                disabled={isSearching || query.trim().length < 2}
+              >
+                <Text style={styles.searchBtnText}>{isSearching ? '검색중' : '검색'}</Text>
+              </TouchableOpacity>
             </View>
 
-            {destinations.map((d, i) => {
-              let prevLat =
-                i === 0 ? (location?.coords.latitude ?? d.lat) : destinations[i - 1].lat;
-              let prevLng =
-                i === 0 ? (location?.coords.longitude ?? d.lng) : destinations[i - 1].lng;
-              const dist = getDistance(prevLat, prevLng, d.lat, d.lng);
-              accumulatedKm += dist;
-
-              return (
-                <TouchableOpacity
-                  key={d.id}
-                  style={styles.listItem}
-                  onPress={() => openKakaoNavi(d)}
-                >
-                  <View style={styles.indexCircle}>
-                    <Text style={styles.indexText}>{i + 1}</Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={[styles.listAddr, { color: t('#333', '#fff') }]}
-                      numberOfLines={1}
-                    >
-                      {d.address}
-                    </Text>
-                    <Text style={{ fontSize: 12, color: t('#888', '#aaa') }}>
-                      +{dist}km (누적 {accumulatedKm.toFixed(1)}km){' '}
-                      <Text style={{ color: '#2ecc71' }}>
-                        🕒 {getArrivalTime(now, accumulatedKm)} 도착
-                      </Text>
-                    </Text>
-                  </View>
+            {searchResults.length > 0 ? (
+              <View style={styles.resultWrap}>
+                {searchResults.map((item, idx) => (
                   <TouchableOpacity
-                    onPress={() =>
-                      setDestinations(destinations.filter((item) => item.id !== d.id))
-                    }
+                    key={`${item.x}-${item.y}-${idx}`}
+                    style={styles.resultItem}
+                    onPress={() => addFromSearchResult(item)}
                   >
-                    <Ionicons name="close-circle" size={22} color="#ccc" />
+                    <Ionicons name="location-outline" size={18} color={theme.accent} />
+                    <View style={{ flex: 1, marginLeft: 8 }}>
+                      <Text style={styles.resultName} numberOfLines={1}>
+                        {item.place_name}
+                      </Text>
+                      <Text style={styles.resultAddr} numberOfLines={1}>
+                        {toAddressText(item)}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
-                </TouchableOpacity>
-              );
-            })}
+                ))}
+              </View>
+            ) : null}
+          </View>
 
-            <TouchableOpacity
-              style={[styles.addBtn, { backgroundColor: t('#f9f9f9', '#2a2a2a') }]}
-              onPress={() => setViewMode('detail')}
-            >
-              <Text style={{ color: '#2ecc71', fontWeight: 'bold' }}>+ 목적지 추가</Text>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.label}>목적지 ({destinations.length})</Text>
+              {destinations.length > 0 ? (
+                <TouchableOpacity onPress={optimizeRoute}>
+                  <Text style={styles.linkText}>최적화</Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+
+            {destinations.length === 0 ? (
+              <Text style={{ color: theme.textMuted }}>검색 결과를 탭해서 목적지를 추가해 주세요.</Text>
+            ) : (
+              destinations.map((d, i) => {
+                const prevLat = i === 0 ? (currentLocation?.coords.latitude ?? d.lat) : destinations[i - 1].lat;
+                const prevLng = i === 0 ? (currentLocation?.coords.longitude ?? d.lng) : destinations[i - 1].lng;
+                const dist = getDistanceKm(prevLat, prevLng, d.lat, d.lng);
+                accumulatedKm += dist;
+
+                return (
+                  <TouchableOpacity key={d.id} style={styles.destRow} onPress={() => confirmOpenNavigation(d)}>
+                    <View style={styles.numBadge}>
+                      <Text style={styles.numBadgeText}>{i + 1}</Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.destAddress} numberOfLines={1}>
+                        {d.address}
+                      </Text>
+                      <Text style={styles.destMeta}>
+                        +{dist}km (누적 {accumulatedKm.toFixed(1)}km) · {getEta(now, accumulatedKm)} 도착 예상
+                      </Text>
+                    </View>
+                    <TouchableOpacity onPress={() => removeDestination(d.id)}>
+                      <Ionicons name="close-circle" size={22} color={theme.textMuted} />
+                    </TouchableOpacity>
+                  </TouchableOpacity>
+                );
+              })
+            )}
+
+            <TouchableOpacity style={styles.addBtn} onPress={() => setViewMode('map')}>
+              <Text style={{ color: theme.accent, fontWeight: '700' }}>지도에서 목적지 추가</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -313,49 +513,31 @@ export default function Index() {
     );
   }
 
-  // ============================================================
-  // [화면 2: 카카오맵 + 검색]
-  // ============================================================
-  if (viewMode === 'detail') {
+  if (viewMode === 'map') {
     return (
       <View style={styles.container}>
-        <Stack.Screen options={{ title: '목적지 설정', headerShown: false }} />
+        <Stack.Screen options={{ headerShown: false }} />
 
-        {/* 카카오맵 WebView */}
         <KakaoMap
           ref={mapRef}
-          latitude={tempCoords.lat || location?.coords.latitude || 37.5665}
-          longitude={tempCoords.lng || location?.coords.longitude || 126.978}
+          latitude={selectedPoint?.lat || currentLocation?.coords.latitude || 37.5665}
+          longitude={selectedPoint?.lng || currentLocation?.coords.longitude || 126.978}
           markers={destinations.map((d, i) => ({
             id: d.id,
             lat: d.lat,
             lng: d.lng,
-            label: (i + 1).toString(),
+            label: `${i + 1}`,
           }))}
           showUserLocation={true}
+          onMapReady={handleMapReady}
+          onMapError={handleMapError}
           onMapPress={(lat, lng) => {
-            setTempCoords({ lat, lng });
-            // 역지오코딩으로 주소 가져오기
-            fetch(
-              `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`,
-              { headers: { Authorization: `KakaoAK ${KAKAO_CONFIG.REST_KEY}` } }
-            )
-              .then((r) => r.json())
-              .then((data) => {
-                if (data.documents?.[0]) {
-                  const addr =
-                    data.documents[0].road_address?.address_name ||
-                    data.documents[0].address?.address_name ||
-                    '';
-                  setTempAddress(addr);
-                }
-              })
-              .catch(() => {});
+            setSelectedPoint({ lat, lng });
+            void fetchAddressByCoord(lat, lng);
           }}
         />
 
-        {/* 플로팅 검색바 */}
-        <View style={styles.floatingSearchContainer}>
+        <View style={styles.floatingTopRow}>
           <TouchableOpacity
             onPress={() => {
               setViewMode('list');
@@ -363,305 +545,457 @@ export default function Index() {
             }}
             style={styles.backBtn}
           >
-            <Ionicons name="chevron-back" size={24} color="#333" />
+            <Ionicons name="chevron-back" size={24} color={theme.text} />
           </TouchableOpacity>
-          <View style={styles.searchBarWrapper}>
-            <Ionicons name="search" size={20} color="#888" style={{ marginLeft: 10 }} />
+          <View style={styles.floatingSearch}>
+            <Ionicons name="search" size={20} color={theme.textMuted} style={{ marginLeft: 10 }} />
             <TextInput
               style={styles.floatingInput}
               placeholder="장소 또는 주소 검색"
-              value={tempAddress}
+              placeholderTextColor={theme.textMuted}
+              value={query}
               onChangeText={(text) => {
-                setTempAddress(text);
-                if (text.length === 0) setSearchResults([]);
+                setQuery(text);
+                if (!text.trim()) setSearchResults([]);
               }}
               onSubmitEditing={searchAddress}
               returnKeyType="search"
             />
-            {tempAddress.length > 0 && (
-              <TouchableOpacity
-                onPress={() => {
-                  setTempAddress('');
-                  setSearchResults([]);
-                }}
-                style={{ paddingHorizontal: 8 }}
-              >
-                <Ionicons name="close-circle" size={20} color="#ccc" />
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity style={styles.searchSubmitBtn} onPress={searchAddress}>
-              <Text style={{ color: '#fff', fontWeight: 'bold' }}>검색</Text>
+            <TouchableOpacity style={styles.searchMiniBtn} onPress={searchAddress}>
+              <Text style={styles.searchMiniBtnText}>검색</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity style={styles.mapSettingsBtn} onPress={() => setViewMode('settings')}>
+            <Ionicons name="settings-outline" size={22} color={theme.text} />
+          </TouchableOpacity>
         </View>
 
-        {/* 검색 결과 드롭다운 */}
-        {searchResults.length > 0 && (
-          <View style={styles.searchResultsContainer}>
-            <FlatList
-              data={searchResults}
-              keyExtractor={(item, index) => `${item.x}-${item.y}-${index}`}
-              renderItem={({ item }) => (
+        {searchResults.length > 0 ? (
+          <View style={styles.floatingResults}>
+            <ScrollView>
+              {searchResults.map((item, idx) => (
                 <TouchableOpacity
-                  style={styles.searchResultItem}
-                  onPress={() => selectSearchResult(item)}
+                  key={`${item.x}-${item.y}-${idx}`}
+                  style={styles.resultItem}
+                  onPress={() => focusSearchResultOnMap(item)}
                 >
-                  <Ionicons
-                    name="location-outline"
-                    size={20}
-                    color="#2ecc71"
-                    style={{ marginRight: 10 }}
-                  />
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.searchResultName} numberOfLines={1}>
+                  <Ionicons name="location-outline" size={18} color={theme.accent} />
+                  <View style={{ flex: 1, marginLeft: 8 }}>
+                    <Text style={styles.resultName} numberOfLines={1}>
                       {item.place_name}
                     </Text>
-                    <Text style={styles.searchResultAddr} numberOfLines={1}>
-                      {item.road_address_name || item.address_name}
+                    <Text style={styles.resultAddr} numberOfLines={1}>
+                      {toAddressText(item)}
                     </Text>
                   </View>
                 </TouchableOpacity>
-              )}
-            />
+              ))}
+            </ScrollView>
           </View>
-        )}
+        ) : null}
 
-        {/* 선택된 위치 정보 & 확정 버튼 */}
-        {tempCoords.lat !== 0 && (
+        {selectedPoint ? (
           <View style={styles.bottomSheet}>
-            <View style={styles.bottomSheetHandle} />
-            <Text style={styles.selectedAddrText} numberOfLines={2}>
-              📍 {tempAddress || '선택된 위치'}
+            <View style={styles.bottomHandle} />
+            <Text style={styles.bottomText} numberOfLines={2}>
+              {query || `${selectedPoint.lat.toFixed(5)}, ${selectedPoint.lng.toFixed(5)}`}
             </Text>
-            <TouchableOpacity style={styles.saveBtn} onPress={saveDestination}>
-              <Text style={styles.saveBtnText}>이 위치로 목적지 추가</Text>
+            <TouchableOpacity style={styles.saveBtn} onPress={saveSelectedPoint}>
+              <Text style={styles.saveBtnText}>이 위치를 목적지로 추가</Text>
             </TouchableOpacity>
           </View>
-        )}
+        ) : null}
       </View>
     );
   }
 
-  // ============================================================
-  // [화면 3: 설정]
-  // ============================================================
   return (
-    <ScrollView style={[styles.container, { backgroundColor: t('#f8f9fa', '#121212') }]}>
-      <Stack.Screen options={{ title: '설정' }} />
-      <View style={styles.settingHeader}>
+    <ScrollView style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: '설정',
+          headerStyle: { backgroundColor: theme.bg },
+          headerTintColor: theme.text,
+        }}
+      />
+
+      <View style={styles.settingsHead}>
         <TouchableOpacity onPress={() => setViewMode('list')}>
-          <Ionicons name="close" size={28} color={t('#333', '#fff')} />
+          <Ionicons name="close" size={28} color={theme.text} />
         </TouchableOpacity>
-        <Text style={[styles.settingHeaderText, { color: t('#333', '#fff') }]}>앱 설정</Text>
+        <Text style={styles.settingsHeadText}>앱 설정</Text>
         <View style={{ width: 28 }} />
       </View>
 
-      <View style={[styles.settingSection, { backgroundColor: t('#fff', '#1e1e1e') }]}>
-        <Text style={styles.sectionTitle}>디스플레이</Text>
-        <View style={styles.settingRow}>
-          <Text style={[styles.label, { color: t('#333', '#fff') }]}>다크 모드</Text>
-          <Switch value={isDarkMode} onValueChange={setIsDarkMode} />
+      <View style={styles.settingsSection}>
+        <Text style={styles.settingsTitle}>디스플레이</Text>
+        <Text style={styles.settingsHint}>테마 선택</Text>
+        <View style={styles.themePickerRow}>
+          <TouchableOpacity
+            style={[styles.themeOptionBtn, themeMode === 'light' && styles.themeOptionBtnActive]}
+            onPress={() => setThemeMode('light')}
+          >
+            <Ionicons
+              name="sunny-outline"
+              size={16}
+              color={themeMode === 'light' ? '#ffffff' : theme.text}
+            />
+            <Text
+              style={[
+                styles.themeOptionText,
+                { color: themeMode === 'light' ? '#ffffff' : theme.text },
+              ]}
+            >
+              라이트
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.themeOptionBtn, themeMode === 'dark' && styles.themeOptionBtnActive]}
+            onPress={() => setThemeMode('dark')}
+          >
+            <Ionicons
+              name="moon-outline"
+              size={16}
+              color={themeMode === 'dark' ? '#ffffff' : theme.text}
+            />
+            <Text
+              style={[
+                styles.themeOptionText,
+                { color: themeMode === 'dark' ? '#ffffff' : theme.text },
+              ]}
+            >
+              다크
+            </Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ marginTop: 15 }}>
-          <Text style={[styles.label, { color: t('#333', '#fff') }]}>
-            화면 밝기 ({Math.round(brightness * 100)}%)
-          </Text>
+        <View style={{ marginTop: 16 }}>
+          <Text style={styles.label}>밝기 ({Math.round(brightness * 100)}%)</Text>
           <Slider
             style={{ width: '100%', height: 40 }}
             minimumValue={0}
             maximumValue={1}
             value={brightness}
             onValueChange={setBrightness}
-            minimumTrackTintColor="#2ecc71"
+            minimumTrackTintColor={theme.accent}
           />
         </View>
       </View>
 
-      <View style={[styles.settingSection, { backgroundColor: t('#fff', '#1e1e1e') }]}>
-        <Text style={styles.sectionTitle}>내비게이션</Text>
-        <View style={styles.settingRow}>
-          <Text style={[styles.label, { color: t('#333', '#fff') }]}>기공물 특수 배송 모드</Text>
-          <Switch value={isExpertMode} onValueChange={setIsExpertMode} />
+      <View style={styles.settingsSection}>
+        <Text style={styles.settingsTitle}>배달 옵션</Text>
+        <View style={styles.settingsRow}>
+          <Text style={styles.label}>전문 모드</Text>
+          <Switch
+            value={isExpertMode}
+            onValueChange={setIsExpertMode}
+            trackColor={{ false: '#8a8f98', true: theme.accent }}
+            thumbColor="#ffffff"
+          />
         </View>
-        <Text style={{ fontSize: 12, color: '#888', marginTop: 5 }}>
-          * 치기공소 배달 시 최적의 경로 알고리즘을 적용합니다.
+        <Text style={styles.settingsHint}>
+          전문 모드를 켜면 목적지가 많을 때 더 공격적으로 가까운 순 정렬을 수행합니다.
         </Text>
       </View>
 
-      <View style={[styles.settingSection, { backgroundColor: t('#fff', '#1e1e1e') }]}>
-        <Text style={styles.sectionTitle}>정보</Text>
-        <Text style={{ color: t('#666', '#999'), fontSize: 13 }}>
-          Routelo v1.0.0{'\n'}카카오맵 API 기반 배달 내비게이션
-        </Text>
-      </View>
     </ScrollView>
   );
 }
 
-// ============================================================
-// 스타일
-// ============================================================
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-
-  // 리스트
-  listHeader: { paddingTop: 40, paddingBottom: 20, alignItems: 'center' },
-  mainEmoji: { fontSize: 50 },
-  mainTitle: { fontSize: 32, fontWeight: '900', color: '#2ecc71' },
-  mainSubtitle: { fontSize: 14 },
-  listBody: { padding: 20 },
-  card: {
-    borderRadius: 25,
-    padding: 20,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-  },
-  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
-  label: { fontWeight: 'bold', fontSize: 16 },
-  optLink: { color: '#2ecc71', fontWeight: 'bold' },
-  listItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 18 },
-  indexCircle: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: '#2ecc71',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  indexText: { color: '#fff', fontSize: 11, fontWeight: 'bold' },
-  listAddr: { fontWeight: 'bold', fontSize: 15, marginBottom: 2 },
-  addBtn: { padding: 16, alignItems: 'center', borderRadius: 15, marginTop: 10 },
-
-  // 검색 & 지도
-  floatingSearchContainer: {
-    position: 'absolute',
-    top: 60,
-    left: 16,
-    right: 16,
-    zIndex: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  backBtn: {
-    backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 15,
-    elevation: 5,
-    marginRight: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  searchBarWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    elevation: 5,
-    paddingLeft: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  floatingInput: { flex: 1, paddingVertical: 12, paddingHorizontal: 10, fontSize: 15 },
-  searchSubmitBtn: {
-    backgroundColor: '#2ecc71',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 12,
-    marginRight: 5,
-  },
-
-  // 검색 결과
-  searchResultsContainer: {
-    position: 'absolute',
-    top: 120,
-    left: 16,
-    right: 16,
-    zIndex: 10,
-    backgroundColor: '#fff',
-    borderRadius: 15,
-    elevation: 5,
-    maxHeight: 250,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  searchResultItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#eee',
-  },
-  searchResultName: { fontSize: 15, fontWeight: '600', color: '#333' },
-  searchResultAddr: { fontSize: 12, color: '#888', marginTop: 2 },
-
-  // 하단 시트
-  bottomSheet: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    padding: 20,
-    paddingBottom: 40,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: -3 },
-  },
-  bottomSheetHandle: {
-    width: 40,
-    height: 4,
-    backgroundColor: '#ddd',
-    borderRadius: 2,
-    alignSelf: 'center',
-    marginBottom: 15,
-  },
-  selectedAddrText: { fontSize: 16, fontWeight: '600', color: '#333', marginBottom: 15 },
-  saveBtn: {
-    backgroundColor: '#2ecc71',
-    padding: 18,
-    borderRadius: 15,
-    alignItems: 'center',
-  },
-  saveBtnText: { color: '#fff', fontWeight: 'bold', fontSize: 17 },
-
-  // 설정
-  settingHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 60,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  settingHeaderText: { fontSize: 22, fontWeight: 'bold' },
-  settingSection: {
-    marginHorizontal: 20,
-    marginBottom: 20,
-    padding: 20,
-    borderRadius: 20,
-    elevation: 2,
-  },
-  sectionTitle: {
-    fontSize: 13,
-    color: '#2ecc71',
-    fontWeight: 'bold',
-    marginBottom: 15,
-    textTransform: 'uppercase',
-  },
-  settingRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-});
+const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: theme.bg },
+    floatingSettingsBtn: {
+      position: 'absolute',
+      top: 14,
+      right: 14,
+      zIndex: 20,
+      width: 42,
+      height: 42,
+      borderRadius: 21,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.card,
+      borderWidth: 1,
+      borderColor: theme.border,
+    },
+    hero: { alignItems: 'center', paddingTop: 18, paddingBottom: 10 },
+    heroTitle: {
+      color: theme.accent,
+      fontSize: 46,
+      fontFamily: Platform.select({
+        ios: 'SnellRoundhand-Bold',
+        android: 'cursive',
+        default: 'serif',
+      }),
+      fontWeight: '800',
+    },
+    heroSubtitle: { color: theme.textMuted, fontSize: 13, marginTop: -4 },
+    body: { paddingHorizontal: 16 },
+    card: {
+      backgroundColor: theme.card,
+      borderWidth: 1,
+      borderColor: theme.border,
+      borderRadius: 18,
+      padding: 14,
+      marginBottom: 12,
+    },
+    cardHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    label: { color: theme.text, fontWeight: '700', fontSize: 16 },
+    linkText: { color: theme.accent, fontWeight: '700' },
+    mapPreview: {
+      height: 210,
+      borderRadius: 12,
+      overflow: 'hidden',
+      borderWidth: 1,
+      borderColor: theme.border,
+      backgroundColor: '#0f1115',
+    },
+    mapInner: { flex: 1 },
+    loadingOverlay: {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'rgba(0,0,0,0.25)',
+    },
+    loadingText: {
+      color: '#fff',
+      fontWeight: '700',
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+    },
+    errorBox: {
+      backgroundColor: '#ffefef',
+      borderColor: '#f5c2c2',
+      borderWidth: 1,
+      borderRadius: 10,
+      padding: 10,
+      marginBottom: 10,
+    },
+    errorTitle: { color: '#a12323', fontWeight: '700', marginBottom: 4 },
+    errorText: { color: '#a12323', fontSize: 12 },
+    searchRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    searchInput: {
+      flex: 1,
+      backgroundColor: theme.cardAlt,
+      borderWidth: 1,
+      borderColor: theme.border,
+      borderRadius: 12,
+      color: theme.text,
+      paddingHorizontal: 12,
+      paddingVertical: 11,
+      fontSize: 14,
+    },
+    searchBtn: {
+      backgroundColor: theme.accent,
+      borderRadius: 12,
+      paddingHorizontal: 12,
+      paddingVertical: 11,
+    },
+    searchBtnText: { color: '#fff', fontWeight: '700' },
+    resultWrap: {
+      marginTop: 10,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: theme.border,
+      overflow: 'hidden',
+    },
+    resultItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.border,
+      backgroundColor: theme.cardAlt,
+    },
+    resultName: { color: theme.text, fontWeight: '700', fontSize: 14 },
+    resultAddr: { color: theme.textMuted, fontSize: 12, marginTop: 1 },
+    destRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: theme.border,
+      marginBottom: 12,
+      paddingBottom: 8,
+    },
+    numBadge: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: theme.accent,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: 10,
+    },
+    numBadgeText: { color: '#fff', fontWeight: '700', fontSize: 11 },
+    destAddress: { color: theme.text, fontWeight: '700', fontSize: 15, marginBottom: 2 },
+    destMeta: { color: theme.textMuted, fontSize: 12 },
+    addBtn: {
+      marginTop: 6,
+      alignItems: 'center',
+      paddingVertical: 12,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: theme.border,
+      backgroundColor: theme.cardAlt,
+    },
+    floatingTopRow: {
+      position: 'absolute',
+      top: 60,
+      left: 16,
+      right: 16,
+      zIndex: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    backBtn: {
+      marginRight: 10,
+      padding: 12,
+      borderRadius: 14,
+      backgroundColor: theme.card,
+      borderWidth: 1,
+      borderColor: theme.border,
+    },
+    floatingSearch: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: 14,
+      backgroundColor: theme.card,
+      borderWidth: 1,
+      borderColor: theme.border,
+    },
+    floatingInput: {
+      flex: 1,
+      color: theme.text,
+      paddingHorizontal: 8,
+      paddingVertical: 11,
+      fontSize: 15,
+    },
+    searchMiniBtn: {
+      marginRight: 6,
+      borderRadius: 10,
+      backgroundColor: theme.accent,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+    },
+    searchMiniBtnText: { color: '#fff', fontWeight: '700' },
+    mapSettingsBtn: {
+      marginLeft: 10,
+      width: 44,
+      height: 44,
+      borderRadius: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: theme.card,
+      borderWidth: 1,
+      borderColor: theme.border,
+    },
+    floatingResults: {
+      position: 'absolute',
+      top: 120,
+      left: 16,
+      right: 16,
+      maxHeight: 250,
+      zIndex: 10,
+      backgroundColor: theme.card,
+      borderWidth: 1,
+      borderColor: theme.border,
+      borderRadius: 14,
+      overflow: 'hidden',
+    },
+    bottomSheet: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      paddingHorizontal: 18,
+      paddingTop: 10,
+      paddingBottom: 34,
+      borderTopLeftRadius: 22,
+      borderTopRightRadius: 22,
+      backgroundColor: theme.cardAlt,
+      borderTopWidth: 1,
+      borderColor: theme.border,
+    },
+    bottomHandle: {
+      width: 42,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: theme.textMuted,
+      alignSelf: 'center',
+      marginBottom: 12,
+    },
+    bottomText: { color: theme.text, fontWeight: '600', fontSize: 15, marginBottom: 12 },
+    saveBtn: {
+      backgroundColor: theme.accent,
+      borderRadius: 12,
+      alignItems: 'center',
+      paddingVertical: 14,
+    },
+    saveBtnText: { color: '#fff', fontWeight: '700', fontSize: 15 },
+    settingsHead: {
+      marginTop: 52,
+      marginHorizontal: 20,
+      marginBottom: 18,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    settingsHeadText: { color: theme.text, fontWeight: '700', fontSize: 21 },
+    settingsSection: {
+      marginHorizontal: 20,
+      marginBottom: 16,
+      padding: 16,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: theme.border,
+      backgroundColor: theme.card,
+    },
+    settingsTitle: {
+      color: theme.accent,
+      textTransform: 'uppercase',
+      fontWeight: '700',
+      fontSize: 12,
+      marginBottom: 12,
+    },
+    settingsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+    themePickerRow: {
+      flexDirection: 'row',
+      gap: 10,
+      marginTop: 8,
+    },
+    themeOptionBtn: {
+      flex: 1,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: theme.border,
+      backgroundColor: theme.cardAlt,
+      paddingVertical: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'row',
+      gap: 6,
+    },
+    themeOptionBtnActive: {
+      backgroundColor: theme.accent,
+      borderColor: theme.accent,
+    },
+    themeOptionText: {
+      fontWeight: '700',
+      fontSize: 13,
+    },
+    settingsHint: { color: theme.textMuted, fontSize: 12, marginTop: 8 },
+    dangerText: { color: theme.danger },
+  });

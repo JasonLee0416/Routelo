@@ -17,11 +17,6 @@
     },
     "android": {
       "package": "com.jasonlee0312.routelo",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyBWbgGyG_v49DR6RPcZy645b7iBXxpj7NY"
-        }
-      },
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png"
@@ -37,26 +32,14 @@
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
-            "buildToolsVersion": "34.0.0",
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0",
             "kotlinVersion": "1.9.24",
             "gradleDaemonJVMArgs": [
               "-Xmx4g",
               "-XX:MaxMetaspaceSize=1g"
             ]
-          }
-        }
-      ],
-      [
-        "@react-native-kakao/core",
-        {
-          "nativeAppKey": "525cd07ac0a524c48dbc6fcd3a95ffb6",
-          "android": {
-            "authCodeHandlerActivity": true
-          },
-          "ios": {
-            "handleKakaoOpenUrl": true
           }
         }
       ]
@@ -79,7 +62,7 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/50e378b0-29f2-4349-a00c-2fb23957b633"
+      "enabled": false
     }
   }
 }
