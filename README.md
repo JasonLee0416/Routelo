@@ -1,48 +1,70 @@
-🛵 Routelo: Smooth Routes, Zero Stress
-"So, here’s the story behind the name! Routelo is a clever mix of 'Route' and 'Low' (as in low effort). It’s built on a simple but powerful promise: finding your path should never be the hard part of your job.
+# Routelo — Route Planning Prototype
 
-I created this app for the everyday heroes we see working all around our neighborhoods—the folks on the front lines who keep our daily lives moving. They’re out there putting in the hard work every single day, so I wanted to give them something back: a tool that lets them breeze through their day with the most efficient routes possible.
+> **Project status: legacy prototype.**
+> This repository preserves the first working exploration that led to
+> [Routelo v2](https://github.com/JasonLee0416/Routelo.version_2).
 
-Routelo does all the heavy lifting and map-crunching so they can focus on what they do best, with zero stress and total ease. Think of it as a smart co-pilot that’s always got your back, making sure you get where you need to go without the extra effort! 🙌"
+Routelo began with a narrow question:
 
-## 🚀 Project Overview: Routelo (√lo)
+> Can a delivery driver enter several destinations on a phone and get a more
+> useful visit order without operating a full logistics platform?
 
-**Routelo** is a high-performance, cross-platform logistics solution designed to solve the "last-mile" delivery challenge through intelligent route optimization and real-time data processing. Built with **React Native** and **Expo**, the application seamlessly integrates advanced mapping services with a user-centric interface to streamline complex delivery workflows.
+This prototype was built to explore that interaction. It connects device
+location, address geocoding, map markers, distance estimates, and a simple
+nearest-neighbor route ordering flow in one React Native screen.
 
-### ⚡ High-Performance Architecture
+## What This Prototype Explored
 
-The core of Routelo is engineered for speed and reliability, ensuring that logistics professionals can focus on their tasks without technical friction.
+- Requesting and using the driver's current location
+- Converting a typed address into map coordinates
+- Adding and removing delivery destinations
+- Estimating point-to-point distance with the Haversine formula
+- Reordering destinations with a nearest-neighbor heuristic
+- Comparing list, map, and settings interactions on a mobile device
 
-* **Intelligent Route Optimization**: Implements a highly efficient algorithm to reorder multiple destinations, significantly reducing total travel distance and fuel consumption.
-* **Real-Time Analytics**: Provides instantaneous distance and ETA calculations based on dynamic variables, offering users high-precision arrival forecasts.
-* **Optimized Resource Management**: Leverages **EAS (Expo Application Services)** for cloud-based builds and **OTA (Over-the-Air) updates**, allowing for rapid deployment of performance patches and feature enhancements without downtime.
+The prototype source is preserved in [`for Andorid`](for%20Andorid). It is a
+historical snapshot rather than a production-ready application.
 
-### 🌍 Versatility & Scalability
+## What It Did Not Solve
 
-Routelo features a modular architecture that makes it adaptable to various high-precision delivery and specialized logistics sectors.
+The experiment exposed the limitations of route planning in isolation:
 
-* **Modular "Pro Mode"**: Includes a dedicated mode tailored for high-priority deliveries, ensuring that specialized handling requirements are met through optimized logistics logic.
-* **User-Centric UI/UX**: Features a robust settings suite, including **Dark Mode** and integrated **Brightness Control**, designed to provide optimal visibility for users in varying environmental conditions.
-* **Cross-Platform Consistency**: Designed from the ground up to maintain a high-quality, consistent experience across both **Android and iOS** platforms.
+- Drivers still had to transcribe paper receipt data manually.
+- Straight-line distance was not a substitute for road distance or traffic.
+- Delivery deadlines and event times were not part of the route decision.
+- The single-screen structure did not scale to a complete daily workflow.
+- Text encoding and project packaging needed a more disciplined foundation.
 
----
+Those limitations became requirements for the next experiments.
 
-## 💡 Advanced Insights for Further Development
+## Evolution
 
-To further elevate Routelo's market competitiveness, consider these technical enhancements:
+```text
+Routelo prototype
+  └─ validated mobile destination entry and route-order UX
+       ↓
+Flogg
+  └─ explored receipt capture, Vision API extraction, and local SQLite records
+       ↓
+Routelo v2
+  └─ integrates delivery operations, reviewable OCR data, deadline risk,
+     local-first records, and route handoff to Google Maps
+```
 
-1. **Predictive Traffic Integration**: Integrate machine learning models to predict traffic patterns based on historical data, allowing the route optimization algorithm to adjust preemptively before the driver encounters delays.
-2. **Telemetry & Feedback Loop**: Utilize device sensors (accelerometer/gyroscope) to monitor "delivery health"—tracking sudden movements or temperature changes if sensors are available—to ensure the integrity of sensitive cargo.
-3. **Offline-First Syncing Strategy**: Implement a robust local database (like SQLite or WatermelonDB) to ensure that delivery data is accessible and editable even in areas with zero connectivity, syncing automatically once the signal is restored.
+- Receipt workflow experiment:
+  [Flogg](https://github.com/JasonLee0416/Flogg)
+- Current integrated project:
+  [Routelo v2](https://github.com/JasonLee0416/Routelo.version_2)
 
----
+## Key Lesson
 
-## 🤝 Closing Statement: Lessons from the Journey
+The main lesson was that a useful field tool cannot optimize only coordinates.
+It also needs to understand the operational context attached to each stop:
+addresses, contacts, strict deadlines, event times, source documents, and the
+driver's ability to review uncertain data.
 
-> "Transitioning into software engineering has been a journey of precision and persistence. What started as a goal to solve a specific logistics problem evolved into a deep exploration of how technology can bridge the gap between complex data and human efficiency.
-> Every build error and configuration challenge was not a setback, but a lesson in architectural integrity. **When the system breaks, don't just patch the surface; debug the logic from the ground up.** I hope my journey through the trials of deployment serves as a roadmap for others navigating their own path in development. May your code always be clean and your routes always be optimized."
+This repository remains public to document that change in problem definition.
 
----
+## License
 
-**Would you like me to...**
-Draft a **concise project summary** for your LinkedIn "Featured" section, or perhaps help you prepare **technical talking points** for an interview regarding your route optimization logic? 🛵✨
+[MIT](LICENSE)
